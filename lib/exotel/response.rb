@@ -3,18 +3,16 @@ module Exotel
   class Response
     
     def initialize(response)
-      #To handle unexpected parsing from httparty
-      response = MultiXml.parse(response) unless response.is_a?(Hash) 
       response_base = response['TwilioResponse']
-      unless response_base.include?('RestException')
-        set_response_data(response_base)
-      else
+      if response_base.include?('RestException')
         set_response_error(response_base)
+      else
+        set_response_data(response_base)
       end
     end
     
     def set_response_data(response_base)
-      (response_base['Call'] or response_base['SMSMessage']).each do |key, value|
+      (response_base['Call'] or response_base['SMSMessage'] or response_base['Numbers']).each do |key, value|
         set_variable(key, value)
       end
     end
