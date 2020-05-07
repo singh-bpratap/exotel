@@ -44,7 +44,7 @@ module Exotel
     end
     
     def auth
-      {:username => Exotel.exotel_sid, :password => Exotel.exotel_token}
+      {:username => Exotel.exotel_api_key, :password => Exotel.exotel_token}
     end
     
     def handle_response(response)

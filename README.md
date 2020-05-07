@@ -9,6 +9,7 @@
   
     Exotel.configure do |c|
       c.exotel_sid   = "Your exotel sid"
+      c.exotel_api_key = "Your exotel api key"
       c.exotel_token = "Your exotel token"
     end
  
