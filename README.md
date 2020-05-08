@@ -11,8 +11,22 @@
       c.exotel_sid   = "Your exotel sid"
       c.exotel_api_key = "Your exotel api key"
       c.exotel_token = "Your exotel token"
+      c.default_sender_number = "Default sender number"
     end
+
+    - exotel_sid
+    It is belongs to your account created in exotel.
+    - exotel_api_key and exotel_token
+    To authenticate the exotel API request.
+    - default_sender_number
+    Used to set default SMS sender number if params does't have :from key.
+    i.e.
+    ```
+    response = Exotel::Sms.send(:to => 'TO_NUMBER', :body => 'MESSAGE BODY')
+    ```
  
+    **Note:** default_sender_number is not implemented to connect a call till now so :from parameter is mandatory in call.
+
   **To send SMS**
   
     response = Exotel::Sms.send(:from => 'FROM_NUMBER', :to => 'TO_NUMBER', :body => 'MESSAGE BODY')

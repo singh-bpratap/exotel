@@ -17,7 +17,8 @@ module Exotel
     
     def send(params={})
       if valid?(params)
-        params = transfrom_params(params)
+        params = required_params(params)
+        body = transfrom_params(params)
         response = self.class.post("/#{Exotel.exotel_sid}/Sms/send",  {:body => params, :basic_auth => auth })
         handle_response(response)
       end  
@@ -31,11 +32,19 @@ module Exotel
     protected
     
     def valid?(params)
-      unless [:from, :to, :body].all?{|key| params.keys.include?(key)}
-        raise Exotel::ParamsError, "Missing one or many required parameters." 
-      else
+      if [:from, :to, :body].all?{|key| params.keys.include?(key)}
         true  
+      else
+        raise Exotel::ParamsError, "Missing one or many required parameters." 
       end 
+    end
+
+    def required_params(params)
+      if params.keys.include?(:from)
+        params
+      else
+        params.merge(from: Exotel.default_sender_number)
+      end
     end
     
     def transfrom_params(params)
