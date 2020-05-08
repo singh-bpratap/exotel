@@ -16,10 +16,10 @@ module Exotel
     end
     
     def send(params={})
+      params = required_params(params)
       if valid?(params)
-        params = required_params(params)
         body = transfrom_params(params)
-        response = self.class.post("/#{Exotel.exotel_sid}/Sms/send",  {:body => params, :basic_auth => auth })
+        response = self.class.post("/#{Exotel.exotel_sid}/Sms/send",  {:body => body, :basic_auth => auth })
         handle_response(response)
       end  
     end
